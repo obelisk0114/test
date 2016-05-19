@@ -1,13 +1,5 @@
 package sample;
 
-/*   參考資料
- * http://openhome.cc/Gossip/Java/ComparableComparator.html
- * http://fuxueliang.com/tech/2013/05/26/java-sorting-comparator-vs-comparable-tutorial/
- * http://give.pixnet.net/blog/post/11346747-how-to-sort-objects-in-java-(排序java物件)
- * http://www.ewdna.com/2008/10/list.html
- * https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html
- */
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +34,7 @@ public class Yelp {
 	 *                highest rated first.
 	 */
 	
-	// 實作 1. Find restaurants within specified radius, given a coordinate
+	// Implement 1. Find restaurants within specified radius, given a coordinate
 	public List<Restaurant> simpleFind(double latitude, double longitude,
 			int radius, int diningHour, boolean sortByRating) {
 		List<Restaurant> choose = new ArrayList<Restaurant>();
@@ -56,28 +48,8 @@ public class Yelp {
 		}
 		return choose;
 	}
-	
-	// 加入 2. Improve the above function by only returning restaurants that are open given desired dining hour
-//	public List<Restaurant> findOpen(double latitude, double longitude,
-//			int radius, int diningHour, boolean sortByRating) {
-//		List<Restaurant> choose2 = new ArrayList<Restaurant>();
-//		for (Restaurant element : restaurants) {
-//			double distance = Math.sqrt(Math.pow(
-//					(element.getLatitude() - latitude), 2)
-//					+ Math.pow((element.getLongitude() - longitude), 2));
-//			if (distance <= radius) {
-//				if (diningHour == null) {
-//					choose2.add(element);
-//				} else if ((diningHour >= element.getOpenHour() && diningHour < element
-//						.getCloseHour())) {
-//					choose2.add(element);
-//				}
-//			}
-//		}
-//		return choose2;
-//	}
 
-	// 加入 3. Improve the above function by sorting the results by average ratings
+	// Add 3. Improve the above function by sorting the results by average ratings
 	public List<Restaurant> find(double latitude, double longitude, int radius,
 			Integer diningHour, boolean sortByRating) {
 		List<Restaurant> choose3 = new ArrayList<Restaurant>();
