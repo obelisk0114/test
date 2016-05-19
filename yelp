@@ -283,4 +283,116 @@ public class Yelp {
 	    
 	    y.find(-37.7, -122.6, 5, 9, true);
 	  }
+	  
+	  // for test for test for test
+	  public static class RestaurantWithRating {
+		private double latitude;
+		private double longitude;
+		private int id;
+		private String name;
+		private int openHour; /* in [0-23] */
+		private int closeHour; /* in [0-23] */
+		private int rating; /* in [1-5] */
+
+		public Restaurant() {
+			latitude = -1;
+			longitude = -1;
+			id = -1;
+			name = null;
+			openHour = -1;
+			closeHour = -1;
+			rating = -1;
+		}
+
+		public Restaurant(double latitudeItem, double longitudeItem,
+				int idItem, String nameItem, int openHourItem, int closeHourItem, int ratingItem) {
+			latitude = latitudeItem;
+			longitude = longitudeItem;
+			id = idItem;
+			name = nameItem;
+			openHour = openHourItem;
+			closeHour = closeHourItem;
+			rating = ratingItem;
+		}
+
+		public void setLatitude(double newLatitude) {
+			latitude = newLatitude;
+		}
+
+		public void setLongitude(double newLongitude) {
+			longitude = newLongitude;
+		}
+
+		public void setId(int newId) {
+			id = newId;
+		}
+
+		public void setName(String newName) {
+			name = newName;
+		}
+
+		public void setOpenHour(int newOpenHour) {
+			openHour = newOpenHour;
+		}
+
+		public void setCloseHour(int newcloseHour) {
+			closeHour = newcloseHour;
+		}
+		
+		public void setRating(int ratingItem) {
+		        rating = ratingItem;
+		}
+
+		public double getLatitude() {
+			return latitude;
+		}
+
+		public double getLongitude() {
+			return longitude;
+		}
+
+		public int getId() {
+			return id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public int getOpenHour() {
+			return openHour;
+		}
+
+		public int getCloseHour() {
+			return closeHour;
+		}
+		
+		public int getRating() {
+			return rating;
+		}
+
+		public String toString() {
+			return ("latitude : " + latitude + " ; " + "longitude : "
+					+ longitude + " ; " + "id : " + id + " ; " + "name : " + name
+					+ " ; " + "open hour : " + openHour + " ; " + "close hour : " + closeHour + " ; " 
+					+ "rating : " + rating);
+		}
+
+		public boolean equals(Object otherObject) {
+			if (otherObject == null) {
+				return false;
+			} else if (getClass() != otherObject.getClass()) {
+				return false;
+			} else {
+				Restaurant otherRestaurant = (Restaurant) otherObject;
+				return (super.equals(otherRestaurant)
+						&& (latitude == otherRestaurant.latitude)
+						&& (longitude == otherRestaurant.longitude)
+						&& (id == otherRestaurant.id)
+						&& (name.equals(otherRestaurant.name))
+						&& (openHour == otherRestaurant.openHour) 
+						&& (closeHour == otherRestaurant.closeHour) && (rating == otherRestaurant.rating));
+			}
+		}
+	}
 }
