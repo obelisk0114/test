@@ -1,0 +1,314 @@
+package sample;
+
+/*   參考資料
+ * http://openhome.cc/Gossip/Java/ComparableComparator.html
+ * http://fuxueliang.com/tech/2013/05/26/java-sorting-comparator-vs-comparable-tutorial/
+ * http://give.pixnet.net/blog/post/11346747-how-to-sort-objects-in-java-(排序java物件)
+ * http://www.ewdna.com/2008/10/list.html
+ * https://docs.oracle.com/javase/7/docs/api/java/util/Collections.html
+ */
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+/*
+ * Build a simple Yelp-like system: Given a set of restaurant and metadata (coordinates, ratings, opening hours), design and implement the following functionalities without using a database.
+
+ 1. Find restaurants within specified radius, given a coordinate
+ 2. Improve the above function by only returning restaurants that are open given desired dining hour
+ 3. Improve the above function by sorting the results by average ratings
+ */
+
+public class Yelp {
+	private List<Restaurant> restaurants;
+	private List<Rating> ratings;
+
+	public Yelp(List<Restaurant> restaurants, List<Rating> ratings) {
+		this.restaurants = restaurants;
+		this.ratings = ratings;
+	}
+
+	/*
+	 * Returns list of Restaurant within radius.
+	 *
+	 *  latitude: double
+	 *  longitude: double
+	 *  radius: kilometer in int
+	 *  diningHour: If null, find any restaurant in radius.
+	 *              Otherwise return list of open restaurants at specified hour.
+	 *  sortByRating: If true, sort result in descending order,
+	 *                highest rated first.
+	 */
+	
+	// 實作 1. Find restaurants within specified radius, given a coordinate
+	public List<Restaurant> simpleFind(double latitude, double longitude,
+			int radius, int diningHour, boolean sortByRating) {
+		List<Restaurant> choose = new ArrayList<Restaurant>();
+		for (Restaurant element : restaurants) {
+			double distance = Math.sqrt(Math.pow(
+					(element.getLatitude() - latitude), 2)
+					+ Math.pow((element.getLongitude() - longitude), 2));
+			if (distance <= radius) {
+				choose.add(element);
+			}
+		}
+		return choose;
+	}
+	
+	// 加入 2. Improve the above function by only returning restaurants that are open given desired dining hour
+//	public List<Restaurant> findOpen(double latitude, double longitude,
+//			int radius, int diningHour, boolean sortByRating) {
+//		List<Restaurant> choose2 = new ArrayList<Restaurant>();
+//		for (Restaurant element : restaurants) {
+//			double distance = Math.sqrt(Math.pow(
+//					(element.getLatitude() - latitude), 2)
+//					+ Math.pow((element.getLongitude() - longitude), 2));
+//			if (distance <= radius) {
+//				if (diningHour == null) {
+//					choose2.add(element);
+//				} else if ((diningHour >= element.getOpenHour() && diningHour < element
+//						.getCloseHour())) {
+//					choose2.add(element);
+//				}
+//			}
+//		}
+//		return choose2;
+//	}
+
+	// 加入 3. Improve the above function by sorting the results by average ratings
+	public List<Restaurant> find(double latitude, double longitude, int radius,
+			Integer diningHour, boolean sortByRating) {
+		List<Restaurant> choose3 = new ArrayList<Restaurant>();
+		List<Rating> score3 = new ArrayList<Rating>();
+		for (Restaurant element : restaurants) {
+			double distance = Math.sqrt(Math.pow(
+					(element.getLatitude() - latitude), 2)
+					+ Math.pow((element.getLongitude() - longitude), 2));
+			if (distance <= radius) {
+				if (diningHour == null) {
+					choose3.add(element);
+				} else if ((diningHour >= element.getOpenHour() && diningHour < element
+						.getCloseHour())) {
+					choose3.add(element);
+				}
+			}
+		}
+		
+		Collections.sort(choose3, new Comparator<Restaurant>() {
+			public int compare(Restaurant o1, Restaurant o2) {
+				return o2.getId()-o1.getId();
+			}
+		});
+		Collections.sort(ratings, new Comparator<Rating>() {
+			public int compare(Rating o1, Rating o2) {
+				return o2.getId()-o1.getId();
+			}
+		});
+		
+		int count = 0;
+		for (int i = 0; i < choose3.size(); i++) {
+			for (int j = count; j < ratings.size(); j++) {
+				count++;
+				if (ratings.get(j).getId() == choose3.get(i).getId()) {
+					score3.add(ratings.get(j));
+					break;
+				}
+			}
+		}
+		
+		if (sortByRating) {
+			Collections.sort(score3, new Comparator<Rating>() {
+				public int compare(Rating o1, Rating o2) {
+					return o2.getRating() - o1.getRating();
+				}
+			});
+			for (int i = 0; i < score3.size(); i++) {
+				for (int j = i; j < choose3.size(); j++) {
+					if (score3.get(i).getId() == choose3.get(j).getId()) {
+						Collections.swap(choose3, i, j);
+						break;
+					}
+				}
+			}
+		}
+		for (Restaurant finalElement : choose3) {
+			System.out.println(finalElement);
+		}
+		return choose3;
+	}
+
+	public static class Restaurant {
+		private double latitude;
+		private double longitude;
+		private int id;
+		private String name;
+		private int openHour; /* in [0-23] */
+		private int closeHour; /* in [0-23] */
+
+		public Restaurant() {
+			latitude = -1;
+			longitude = -1;
+			id = -1;
+			name = null;
+			openHour = -1;
+			closeHour = -1;
+		}
+
+		public Restaurant(double latitudeItem, double longitudeItem,
+				int idItem, String nameItem, int openHourItem, int closeHourItem) {
+			latitude = latitudeItem;
+			longitude = longitudeItem;
+			id = idItem;
+			name = nameItem;
+			openHour = openHourItem;
+			closeHour = closeHourItem;
+		}
+
+		public void setLatitude(double newLatitude) {
+			latitude = newLatitude;
+		}
+
+		public void setLongitude(double newLongitude) {
+			longitude = newLongitude;
+		}
+
+		public void setId(int newId) {
+			id = newId;
+		}
+
+		public void setName(String newName) {
+			name = newName;
+		}
+
+		public void setOpenHour(int newOpenHour) {
+			openHour = newOpenHour;
+		}
+
+		public void setCloseHour(int newcloseHour) {
+			closeHour = newcloseHour;
+		}
+
+		public double getLatitude() {
+			return latitude;
+		}
+
+		public double getLongitude() {
+			return longitude;
+		}
+
+		public int getId() {
+			return id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public int getOpenHour() {
+			return openHour;
+		}
+
+		public int getCloseHour() {
+			return closeHour;
+		}
+
+		public String toString() {
+			return ("latitude : " + latitude + " ; " + "longitude : "
+					+ longitude + " ; " + "id : " + id + " ; " + "name : " + name
+					+ " ; " + "open hour : " + openHour + " ; " + "close hour : " + closeHour);
+		}
+
+		public boolean equals(Object otherObject) {
+			if (otherObject == null) {
+				return false;
+			} else if (getClass() != otherObject.getClass()) {
+				return false;
+			} else {
+				Restaurant otherRestaurant = (Restaurant) otherObject;
+				return (super.equals(otherRestaurant)
+						&& (latitude == otherRestaurant.latitude)
+						&& (longitude == otherRestaurant.longitude)
+						&& (id == otherRestaurant.id)
+						&& (name.equals(otherRestaurant.name))
+						&& (openHour == otherRestaurant.openHour) && (closeHour == otherRestaurant.closeHour));
+			}
+		}
+	}
+
+	public static class Rating {
+		private int id;
+		private int rating; /* in [1-5] */
+
+		public Rating() {
+			id = -1;
+			rating = -1;
+		}
+
+		public Rating(int idterm, int ratingterm) {
+			id = idterm;
+			rating = ratingterm;
+		}
+
+		public void setId(int newid) {
+			id = newid;
+		}
+
+		public void setRating(int newrating) {
+			rating = newrating;
+		}
+
+		public int getId() {
+			return id;
+		}
+
+		public int getRating() {
+			return rating;
+		}
+
+		public String toString() {
+			return ("id : " + id + "\n" + "rating : " + rating);
+		}
+
+		public boolean equals(Object otherObject) {
+			if (otherObject == null) {
+				return false;
+			} else if (getClass() != otherObject.getClass()) {
+				return false;
+			} else {
+				Rating otherRating = (Rating) otherObject;
+				return (super.equals(otherRating) && (id == otherRating.id) && (rating == otherRating.rating));
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+	    List<Restaurant> restaurants = new ArrayList<Restaurant>();  /* Omitted */
+	    restaurants.add(new Restaurant(-37, -122, 1, "A", 0, 12));
+	    restaurants.add(new Restaurant(-35, -125, 3, "B", 15, 23));
+	    restaurants.add(new Restaurant(-36, -123, 6, "C", 5, 13));
+	    restaurants.add(new Restaurant(-37.7, -122, 5, "D", 11, 22));
+	    restaurants.add(new Restaurant(-37.2, -123, 7, "E", 0, 23));
+	    restaurants.add(new Restaurant(-30, -110, 2, "F", 2, 19));
+	    restaurants.add(new Restaurant(-36, -122.5, 4, "G", 4, 12));
+	    
+	    List<Rating> ratings = new ArrayList<Rating>();          /* Omitted */
+	    ratings.add(new Rating(3, 3));
+	    ratings.add(new Rating(6, 4));
+	    ratings.add(new Rating(1, 5));
+	    ratings.add(new Rating(4, 3));
+	    ratings.add(new Rating(7, 2));
+	    ratings.add(new Rating(5, 5));
+	    ratings.add(new Rating(2, 1));
+	    
+	    Yelp y = new Yelp(restaurants, ratings);
+	    y.find(-37.7, -122.6, 5, null, false);
+	    System.out.println();
+	    
+	    y.find(-37.7, -122.6, 5, 9, false);
+	    System.out.println();
+	    
+	    y.find(-37.7, -122.6, 5, 9, true);
+	  }
+}
