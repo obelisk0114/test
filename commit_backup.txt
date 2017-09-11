@@ -1,0 +1,23 @@
+Delete commit:
+
+    git reset --hard <commit_id>
+
+    git push origin HEAD --force
+    
+  Explain
+    git reset –mixed：default，only keep source code，back commit and index information
+    git reset –soft：only back information of commit，doesn't restore to index file。can commit directly
+    git reset –hard：totally back，source code in local is also affected 
+
+
+    HEAD：the latest commit
+    HEAD^：last time
+    <commit_id>  SHA1 value of commit
+    
+Combine commit:
+
+  git commit -a --amend -m "my message here"如果之前有一个提交，并且信息为:
+  git commit -a -m "my last commit message"
+  
+  git reset --soft HEAD^
+  git commit --amend
