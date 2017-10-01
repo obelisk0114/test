@@ -9,5 +9,5 @@ S(n) &\leq 2^{\lceil \log_2 n \rceil + 1} - 1 \\
 
 # test2
 \[
-2^{N_{a}} = {N_{a + 1}}
+2^{N_{a}} = {N_{a+1}}
 \]
