@@ -1,8 +1,8 @@
 ## git-dir & work-tree ##
 
-如果想將 pygit2 repository 中的某些 commit copy 到 D:\pygit2 以外的目錄中。此時可以考慮使用 git checkout 或者 git reset 命令來實現，只需顯式指定 `working-tree` 即可。
+如果想將 `pygit2` repository 中的某些 `commit` copy 到 `D:\pygit2` 以外的目錄中。此時可以考慮使用 `git checkout` 或者 `git reset` 命令來實現，只需顯式指定 `working-tree` 即可。
 
-`假定想將 D:\pygit2 中的 master copy 到 D:\bak 中`
+假定想將 `D:\pygit2` 中的 `master` copy 到 `D:\bak` 中
 
 方法一
 
@@ -10,10 +10,10 @@
 	此時可以看到很多提示信息，意思是 D:\\bak 和 D:\pygit2 repository 相比很多文件缺失
 	
 	1.2 git --git-dir=D:\\pygit2\\.git --work-tree=D:\\bak checkout -b tmp -f master
-	使用 <b>-f</b> 強制 checkout，並創建一個 tmp 的 branch
+	使用 -f 強制 checkout，並創建一個 tmp 的 branch
 	
 	1.3 git --git-dir=D:\\pygit2\\.git --work-tree=D:\\bak  branch -d tmp
-	刪除tmp branch
+	刪除 tmp branch
 	
 	1.4 此時可以看到 D:\\bak 中的內容已經被更新為 D:\\pygit2\\.git master branch 的內容
 
