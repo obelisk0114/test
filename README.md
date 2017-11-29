@@ -10,7 +10,7 @@
 	此時可以看到很多提示信息，意思是 D:\\bak 和 D:\pygit2 repository 相比很多文件缺失
 	
 	1.2 git --git-dir=D:\\pygit2\\.git --work-tree=D:\\bak checkout -b tmp -f master
-	使用 `-f` 強制 checkout，並創建一個 tmp 的 branch
+	使用 **-f** 強制 checkout，並創建一個 tmp 的 branch
 	
 	1.3 git --git-dir=D:\\pygit2\\.git --work-tree=D:\\bak  branch -d tmp
 	刪除tmp branch
