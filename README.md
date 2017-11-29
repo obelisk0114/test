@@ -21,6 +21,6 @@
 
 	2.1 git --git-dir=D:\\pygit2\\.git --work-tree=D:\\bak reset --quiet --hard
 	2.2 此時可以看到 D:\\bak 中的內容已經被更新為 D:\\pygit2\\.git master branch 的內容，不過這種方法存在一定的弊端，
-　　　　　　那就是 index 中的內容都已經丟失，想要恢復的話存在一定的難度，所以在使用 reset 之前還是慎重一些比較好。
+            那就是 index 中的內容都已經丟失，想要恢復的話存在一定的難度，所以在使用 reset 之前還是慎重一些比較好。
 
 [Git系列之二 --- git-dir & work-tree](http://www.cnblogs.com/Jerryshome/archive/2011/12/15/2289218.html)
