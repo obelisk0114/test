@@ -1,4 +1,4 @@
-# CS 205 Artificial Intelligence Winter 2018
+# CS 205 Artificial Intelligence - Winter 2018
 ## Project 1: 8 Puzzle
 "puzzleGenerator" is used to generate sliding puzzles. It can generate an M-by-N solvable puzzle. We can set the diameter to determine a random number of movements, which is not larger than the diameter.
 
