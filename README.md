@@ -115,7 +115,7 @@ public class BinarySearchDemo {
 }
 ```
 
-在這個程式中，指定搜尋索引 6 到索引 9（不包括索引 9）的範圍中是否有 85 的值，如果找到的話，傳回索引值，如果沒有找到，傳回一個負值，該負值加 1 再乘以 -1，就是插入點位置，也就是第一個比指定搜尋值大的值之索引位置，就這個程式而言，就是顯示 "插入點8" 的結果。
+在這個程式中，指定搜尋索引 6 到索引 9（不包括索引 9）的範圍中是否有 85 的值，如果找到的話，傳回索引值，如果沒有找到，傳回一個負值，該負值加 1 再乘以 -1，就是插入點位置，也就是第一個比指定搜尋值大的值之索引位置，就這個程式而言，就是顯示 "插入點 8" 的結果。
 
 在 18.1.2 使用 Calendar 中，在範例 18.6 中使用 switch 進行判斷以顯示中文的日期格式，在 Java SE 6 中，您可以直接使用 getDisplayNames() 或 getDisplayName() 方法取得區域化的日期格式顯示，例如可以改寫範例 18.6 為以下的程式：
 
@@ -358,7 +358,8 @@ public class SystemTrayDemo2 {
 圖 21.3 系統工具列蹦現視窗
 
 如果要移除系統工具列中的圖示，則可以使用 SystemTray 實例的 remove() 方法，指定要移除的圖示，例如：
-tray.remove(trayIcon);
+
+	tray.remove(trayIcon);
 
 ### 21.1.5 Classpath 簡化設定
 
@@ -432,7 +433,8 @@ Java SE 6 中包含了 JDBC 4.0，對於 JDBC 的使用有了相當的簡化，�
 
 關於 Apache Derby 的介紹先到這邊告一段落，接下來將要介紹，如何撰寫程式連接 Apache Derby，並使用 JDBC 4.0 的新功能。
 
-21.2.2　載入驅動程式
+### 21.2.2　載入驅動程式
+
 在之前的操作中，可以從圖中看到，要連接 Apache Derby，使用的 JDBC URL 是 "jdbc:derby://localhost:1527/demo"，而 Apache Derby 的 JDBC 驅動程式是放在 derbyclient.jar 之中，因此請記得在您的 Classpath 之中加以設定。
 
 在 JDBC 4.0 之前，如果您要連接資料庫的話，必須使用 Class.forName() 並指定驅動程式類別名稱，以載入 JDBC 驅動程式，例如：
@@ -447,13 +449,14 @@ Connection conn = DriverManager.getConnection(url, username, password);
 ```
 
 在 JDBC 4.0 之中，不需要再呼叫 Class.forName() 並指定驅動程式了，也就是說，只要一行就可以了：
+
 	Connection conn = DriverManager.getConnection(url, username, password);
 
 那麼 JVM 如何得知要載入哪個驅動程式呢？ JVM 會自動在 Classpath 中尋找適當的驅動程式，在包裝有 JDBC 驅動程式的 JAR 檔案中，必須有一個 "META-INF/services/java.sql.Driver" 檔案，當中撰寫驅動程式類別名稱，以 Apache Derby 為例，在 derbyclient.jar 中的 "META-INF/services/java.sql.Driver" 檔案中，撰寫的是 "org.apache.derby.jdbc.ClientDriver"。
 
 以第 20 章的範例 20.2 為例，若使用 JDBC 4.0，則可以將 Class.forName() 該行移除，並在執行時指定 Classpath 中包括 derbyclient.jar 的位置，而範例 20.4 仍然正常運行。
 
-### 21.2.2 改進的例外處理
+### 21.2.3 改進的例外處理
 
 在 JDBC 4.0 之中，SQLException 新增了幾個建構函式，可以接受 Throwable 實例進行 SQLException 的建構，您可以重新將某個例外包裝為 SQLException，例如由於 IOException 發生的 SQLException，這表示您對於 SQLException 所發生的原因更加可以細分與掌握，SQLException 並實作了 `Iterable<T>` 介面，現在您可以在捕捉到 SQLException 時，使用加強的 for 迴圈來找出例外發生的原因，例如：
 
@@ -475,7 +478,7 @@ catch(SQLException ex) {
 
 SQLException 在 JDBC 4.0 中多了幾個子類別，針對不同的錯誤將例外加以細分，您可以查看 API 文件中有關 SQLException 的說明。
 
-### 21.2.3 BLOB、CLOB 的改進
+### 21.2.4 BLOB、CLOB 的改進
 
 在 20.2.3 中介紹過 JDBC 的 LOB 讀寫，當需要存入資料至 BLOB 或 CLOB 欄位時，要使用 PreparedStatement 的 setBinaryStream()、 setObject()、setAsciiStream()、setUnicodeStream() 等方法，在 API 名稱上並不是很明確。
 
