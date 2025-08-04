@@ -22,3 +22,62 @@ The vector  $\mathbf{v} = [{d \over 2}, t]^T$, $d$ is the height of the stacks, 
 $$ r = {d \over 2} , \theta = {\pi \over 2} - x $$
 
 So we can get
+
+$$
+R \mathbf{v} =
+\begin{bmatrix}
+\cos(\theta) & -\sin(\theta) \\
+\sin(\theta) & \cos(\theta)
+\end{bmatrix}
+\begin{bmatrix}
+{d \over 2} \\
+t
+\end{bmatrix} =
+\begin{bmatrix}
+{d \over 2} \cos(\theta) - t \sin(\theta) \\
+{d \over 2} \sin(\theta) + t \cos(\theta)
+\end{bmatrix} =
+\begin{bmatrix}
+r \cos({\pi \over 2} - x) - t \sin({\pi \over 2} - x) \\
+r \sin({\pi \over 2} - x) + t \cos({\pi \over 2} - x)
+\end{bmatrix} =
+\begin{bmatrix}
+r \sin(x) - t \cos(x) \\
+r \cos(x) + t \sin(x)
+\end{bmatrix}
+$$
+
+If we set  $a$  is x coordinate, and  $b$  is y coordinate, we can also use *inner product* and  $L^P$-norm to get the following equations system.
+
+$$
+\begin{aligned}
+& r = a \cos({\pi \over 2} - x) + b \sin({\pi \over 2} - x) \\
+& \sqrt{r^2 + a^2 + b^2 - 2 a r \cos({\pi \over 2} - x) - 2 b r \sin({\pi \over 2} - x)} = t
+\end{aligned}
+$$
+
+Therefore,
+
+$$ a = r \sin(x) - t \cos(x) $$
+
+$$ b = r \cos(x) + t \sin(x) $$
+
+After we get the endpoint coordinates, we can perform the translation. We can separate them to diagonal / anti-diagonal,  $r > b$  or not.
+
+top diagonal format (\\):
+
+$$ b > r, top = the\\_height\\_from\\_top\\_offset + \lvert b - r \rvert $$
+
+$$ b < r, top = the\\_height\\_from\\_top\\_offset - \lvert b - r \rvert $$
+
+top anti-diagonal format (/):
+
+$$ top = the\\_height\\_from\\_top\\_offset - \lvert b - r \rvert $$
+
+left diagonal format (\\):
+
+$$ left = -(a + space\\_between\\_two\\_stacks) $$
+
+left anti-diagonal format (/):
+
+$$ left = -(a + space\\_between\\_two\\_stacks) $$
